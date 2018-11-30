@@ -43,3 +43,7 @@ Implement Least-recently Used Cache with both get and put operations perfomed in
  - Logging in HTTP requests
  - LRU cache through HTTP transport layer
  - LRU cache through HTTP transport layer, with Redis as the data storage system
+
+## Resources
+
+ - [Go by Example](https://gobyexample.com/)
