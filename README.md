@@ -33,3 +33,13 @@ See the question [here](https://leetcode.com/problems/binary-tree-level-order-tr
 Implement Least-recently Used Cache with both get and put operations perfomed in O(1) time complexity. See the question [here](https://leetcode.com/problems/lru-cache/).
 
 **Main learning objectives**: Learn about using doubly linked list in Go. 
+
+## Ideas
+
+ - JSON serialization/deserialization
+ - HTTP GET request handling
+ - HTTP POST request handling
+ - CSRF protection
+ - Logging in HTTP requests
+ - LRU cache through HTTP transport layer
+ - LRU cache through HTTP transport layer, with Redis as the data storage system
