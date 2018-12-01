@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"flag"
+	"log"
 )
 
 func main() {
@@ -18,6 +19,12 @@ func main() {
 		os.Exit(1)
 	}
 
+	wd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(wd)
 	fmt.Println("hello world")
 	fmt.Println(os.Args[1:])
 	fmt.Println(*path)
