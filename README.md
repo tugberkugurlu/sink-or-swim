@@ -48,3 +48,4 @@ Implement Least-recently Used Cache with both get and put operations perfomed in
 
  - [Go by Example](https://gobyexample.com/)
  - [GopherCon 2018: Filippo Valsorda- Asynchronous Networking Patterns](https://www.youtube.com/watch?v=afSiVelXDTQ)
+ - [dotGo 2015 - Rob Pike - Simplicity is Complicated](https://www.youtube.com/watch?v=rFejpH_tAHM)
