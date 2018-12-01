@@ -28,11 +28,11 @@ See the question [here](https://leetcode.com/problems/binary-tree-level-order-tr
 
 **Main learning objectives**: Learn about how you would implement a Tree object in Go. How to implement BFS by using a Queue data structure.
 
-### 04: LRU Cache 
+### 04: LRU Cache
 
 Implement Least-recently Used Cache with both get and put operations perfomed in O(1) time complexity. See the question [here](https://leetcode.com/problems/lru-cache/).
 
-**Main learning objectives**: Learn about using doubly linked list in Go. 
+**Main learning objectives**: Learn about using doubly linked list in Go.
 
 ## Ideas
 
@@ -47,3 +47,4 @@ Implement Least-recently Used Cache with both get and put operations perfomed in
 ## Resources
 
  - [Go by Example](https://gobyexample.com/)
+ - [GopherCon 2018: Filippo Valsorda- Asynchronous Networking Patterns](https://www.youtube.com/watch?v=afSiVelXDTQ)
