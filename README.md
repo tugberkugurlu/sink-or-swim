@@ -50,3 +50,4 @@ Implement Least-recently Used Cache with both get and put operations perfomed in
  - [GopherCon 2018: Filippo Valsorda- Asynchronous Networking Patterns](https://www.youtube.com/watch?v=afSiVelXDTQ)
  - [dotGo 2015 - Rob Pike - Simplicity is Complicated](https://www.youtube.com/watch?v=rFejpH_tAHM)
  - [Sydney Golang Meetup - Rob Pike - Go 2 Draft Specifications](https://www.youtube.com/watch?v=RIvL2ONhFBI)
+ - [GopherCon 2018: Kavya Joshi - The Scheduler Saga](https://www.youtube.com/watch?v=YHRO5WQGh0k)
