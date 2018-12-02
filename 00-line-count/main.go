@@ -1,10 +1,10 @@
 package main
 
 import (
+	"path/filepath"
 	"fmt"
 	"os"
 	"flag"
-	"log"
 )
 
 func main() {
@@ -19,12 +19,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	wd, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
+	absoluteFilePath, _ := filepath.Abs(*path)
 
-	fmt.Println(wd)
+	fmt.Println(absoluteFilePath)
 	fmt.Println("hello world")
 	fmt.Println(os.Args[1:])
 	fmt.Println(*path)

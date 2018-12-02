@@ -23,6 +23,8 @@ go run main.go
  - `os.Getwd()` gets the current directory,
  - It returns two values: directory as `string` and error as `error`. I am not sure what would be the case where this cannot return a value. This might give an idea when: https://github.com/golang/go/blob/f70bd914353b2331a48eedb84aceb458982eaac0/src/os/getwd.go#L26
 
+(How can I open files using relative paths in Go?)[https://stackoverflow.com/q/17071286/463785]
+
 ## Side Learnings
 
  - It is possible to slice the arrays by specifying a half-open range with two indices separated by a colon. based on `b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}`, `b[1:4] == []byte{'o', 'l', 'a'}` will be true, sharing the same storage as b. More info: https://blog.golang.org/go-slices-usage-and-internals
