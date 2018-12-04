@@ -32,20 +32,20 @@ Count:  77
  - Once all defined, we need to parse the flags by calling `flag.Parse` which exists if the args are not specified as expected in a faulted way.
  - One can validate afterwards and can call `flag.Usage()` to print to usage if the validation fails (maybe also exit with `os.Exit` afterwards).
 
- (How to get the current working directory in golang)[https://gist.github.com/arxdsilva/4f73d6b89c9eac93d4ac887521121120]
+ [How to get the current working directory in golang](https://gist.github.com/arxdsilva/4f73d6b89c9eac93d4ac887521121120)
 
  - `os.Getwd()` gets the current directory,
  - It returns two values: directory as `string` and error as `error`. I am not sure what would be the case where this cannot return a value. This might give an idea when: https://github.com/golang/go/blob/f70bd914353b2331a48eedb84aceb458982eaac0/src/os/getwd.go#L26
 
-(How can I open files using relative paths in Go?)[https://stackoverflow.com/q/17071286/463785]
+[How can I open files using relative paths in Go?](https://stackoverflow.com/q/17071286/463785)
 
-(How to check whether a file or directory exists?)[https://stackoverflow.com/a/10510783/463785]
+[How to check whether a file or directory exists?](https://stackoverflow.com/a/10510783/463785)
 
-(Golang Determining whether *File points to file or directory)[https://stackoverflow.com/a/25567952/463785]
+[Golang Determining whether *File points to file or directory](https://stackoverflow.com/a/25567952/463785)
 
-(Go by Example: Reading Files)[https://gobyexample.com/reading-files]
+[Go by Example: Reading Files](https://gobyexample.com/reading-files)
 
-(reading file line by line in go)[https://stackoverflow.com/a/16615559/463785]
+[reading file line by line in go](https://stackoverflow.com/a/16615559/463785)
 
 ## Side Learnings
 
