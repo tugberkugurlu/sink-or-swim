@@ -25,6 +25,10 @@ go run main.go
 
 (How can I open files using relative paths in Go?)[https://stackoverflow.com/q/17071286/463785]
 
+(How to check whether a file or directory exists?)[https://stackoverflow.com/a/10510783/463785]
+
+(Golang Determining whether *File points to file or directory)[https://stackoverflow.com/a/25567952/463785]
+
 ## Side Learnings
 
  - It is possible to slice the arrays by specifying a half-open range with two indices separated by a colon. based on `b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}`, `b[1:4] == []byte{'o', 'l', 'a'}` will be true, sharing the same storage as b. More info: https://blog.golang.org/go-slices-usage-and-internals
@@ -32,3 +36,4 @@ go run main.go
     - OK, not reference types maybe. Go apperently doesn't have a concept of a reference type, see https://www.tapirgames.com/blog/golang-has-no-reference-values and http://goinbigdata.com/golang-pass-by-pointer-vs-pass-by-value/
  - In order to exit from a command line app, you use `os.Exit(int32)`. More info: https://stackoverflow.com/a/18969976/463785
  - When multi-value return is the case from a function call, all values needs to be referenced (if that's the right word to use here). Combining this with golang's compiler error when a declared variable is unused, this provides us a safe ability evaluate all the options before proceeding with the happy path. However, it turn this creates a very messy code where you have to probably write a same level of handling for each case. This seems to be being addressed by [Go 2 error handling proposal](https://go.googlesource.com/proposal/+/master/design/go2draft-error-handling-overview.md).
+ - `fmt.PrintLn` doesn't accept formating directives. VS Code started giving the following warning: `Println call has possible formatting directive %s`. However, it prints the things out when you pass them into the call. For example, `fmt.Println("path does not exist", absoluteFilePath)` prints `path does not exist /Users/tugberk/apps/sink-or-swim/00-line-count/main`.
