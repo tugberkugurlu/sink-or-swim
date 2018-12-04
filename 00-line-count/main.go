@@ -36,7 +36,7 @@ func check(err error) {
 
 func main() {
 	path := flag.String("path", "", "Path to the file to count its lines")
-	// ignoreEmptyLines := flag.Bool("ignore-empty-lines", false, "Specifies to ignore empty lines")
+	ignoreEmptyLines := flag.Bool("ignore-empty-lines", false, "Specifies to ignore empty lines")
 
 	flag.Parse()
 
@@ -68,6 +68,12 @@ func main() {
 	var count int64
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
+		if *ignoreEmptyLines {
+			line := scanner.Text()
+			if len(line) == 0 {
+				continue
+			}
+		}
 		count++
 	}
 

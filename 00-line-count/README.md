@@ -1,15 +1,20 @@
 ## Run
 
-```bash
-go run main.go -path ./main.go
-```
-
-The output should be something like:
+Basic usage:
 
 ```
 ➜  00-line-count git:(master) ✗ go run main.go -path ./main.go
 ==========================
 Count:  87
+==========================
+```
+
+You can also ignore empty lines by passing the `-ignore-empty-lines` command line boolean flag:
+
+```
+➜  00-line-count git:(master) ✗ go run main.go -path ./main.go -ignore-empty-lines
+==========================
+Count:  77
 ==========================
 ```
 
