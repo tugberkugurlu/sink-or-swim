@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"os"
@@ -27,9 +28,15 @@ func isDirectory(path string) (bool, error) {
 	return fileInfo.IsDir(), nil
 }
 
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	path := flag.String("path", "", "Path to the file to count its lines")
-	ignoreEmptyLines := flag.Bool("ignore-empty-lines", false, "Specifies to ignore empty lines")
+	// ignoreEmptyLines := flag.Bool("ignore-empty-lines", false, "Specifies to ignore empty lines")
 
 	flag.Parse()
 
@@ -53,9 +60,28 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(absoluteFilePath)
-	fmt.Println("hello world")
-	fmt.Println(os.Args[1:])
-	fmt.Println(*path)
-	fmt.Println(*ignoreEmptyLines)
+	file, err := os.Open(absoluteFilePath)
+	check(err)
+
+	defer file.Close()
+
+	var count int64
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		count++
+	}
+
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+
+	fmt.Println("==========================")
+	fmt.Println("Count: ", count)
+	fmt.Println("==========================")
+
+	// fmt.Println(absoluteFilePath)
+	// fmt.Println("hello world")
+	// fmt.Println(os.Args[1:])
+	// fmt.Println(*path)
+	// fmt.Println(*ignoreEmptyLines)
 }

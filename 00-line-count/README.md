@@ -1,7 +1,16 @@
 ## Run
 
 ```bash
-go run main.go
+go run main.go -path ./main.go
+```
+
+The output should be something like:
+
+```
+➜  00-line-count git:(master) ✗ go run main.go -path ./main.go
+==========================
+Count:  87
+==========================
 ```
 
 ## Command line arguments
@@ -29,6 +38,10 @@ go run main.go
 
 (Golang Determining whether *File points to file or directory)[https://stackoverflow.com/a/25567952/463785]
 
+(Go by Example: Reading Files)[https://gobyexample.com/reading-files]
+
+(reading file line by line in go)[https://stackoverflow.com/a/16615559/463785]
+
 ## Side Learnings
 
  - It is possible to slice the arrays by specifying a half-open range with two indices separated by a colon. based on `b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}`, `b[1:4] == []byte{'o', 'l', 'a'}` will be true, sharing the same storage as b. More info: https://blog.golang.org/go-slices-usage-and-internals
@@ -37,3 +50,12 @@ go run main.go
  - In order to exit from a command line app, you use `os.Exit(int32)`. More info: https://stackoverflow.com/a/18969976/463785
  - When multi-value return is the case from a function call, all values needs to be referenced (if that's the right word to use here). Combining this with golang's compiler error when a declared variable is unused, this provides us a safe ability evaluate all the options before proceeding with the happy path. However, it turn this creates a very messy code where you have to probably write a same level of handling for each case. This seems to be being addressed by [Go 2 error handling proposal](https://go.googlesource.com/proposal/+/master/design/go2draft-error-handling-overview.md).
  - `fmt.PrintLn` doesn't accept formating directives. VS Code started giving the following warning: `Println call has possible formatting directive %s`. However, it prints the things out when you pass them into the call. For example, `fmt.Println("path does not exist", absoluteFilePath)` prints `path does not exist /Users/tugberk/apps/sink-or-swim/00-line-count/main`.
+ - `for` look can also take a `bool` value which would act as a `while` loop in C#
+ - used `defer` for the first time. [More formar definition](https://tour.golang.org/flowcontrol/12): "A defer statement defers the execution of a function until the surrounding function returns.". When used as an operator to a function statement, it defers the execution till the current function scope exists. The below code, for example, prints the numbers in the following order `1, 3, 2`:
+   ```go
+      func () {
+         fmt.Println("1")
+         defer fmt.Println("2")
+         fmt.Println("3")
+      }()
+   ```
