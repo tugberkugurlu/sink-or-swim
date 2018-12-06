@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"./filelinecounter"
 )
 
 func exists(path string) (bool, error) {
@@ -53,7 +54,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	count := CountLines(absoluteFilePath, *ignoreEmptyLines)
+	count := filelinecounter.CountLines(absoluteFilePath, *ignoreEmptyLines)
 
 	fmt.Println("==========================")
 	fmt.Println("Count: ", count)
