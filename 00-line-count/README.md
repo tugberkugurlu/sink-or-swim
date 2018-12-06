@@ -3,7 +3,8 @@
 Basic usage:
 
 ```
-➜  00-line-count git:(master) ✗ go run main.go -path ./main.go
+➜  00-line-count git:(master) ✗ go build
+➜  00-line-count git:(master) ✗ ./00-line-count -path ./main.go
 ==========================
 Count:  87
 ==========================
@@ -12,7 +13,8 @@ Count:  87
 You can also ignore empty lines by passing the `-ignore-empty-lines` command line boolean flag:
 
 ```
-➜  00-line-count git:(master) ✗ go run main.go -path ./main.go -ignore-empty-lines
+➜  00-line-count git:(master) ✗ go build
+➜  00-line-count git:(master) ✗ ./00-line-count -path ./main.go -ignore-empty-lines
 ==========================
 Count:  77
 ==========================
@@ -64,3 +66,5 @@ Count:  77
          fmt.Println("3")
       }()
    ```
+ - named returns, this is a very interesting one. Go's return values may be named. If so, they are treated as variables defined at the top of the function. See https://tour.golang.org/basics/7 for more info on this.
+ - Packaging in Go tuns out to be very different. Some useful info here on how one might want to package library code within a directory of an exeutable: https://stackoverflow.com/questions/19234445/go-build-vs-go-build-file-go/19240125#19240125

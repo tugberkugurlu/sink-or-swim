@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"os"
@@ -26,12 +25,6 @@ func isDirectory(path string) (bool, error) {
 	}
 
 	return fileInfo.IsDir(), nil
-}
-
-func check(err error) {
-	if err != nil {
-		panic(err)
-	}
 }
 
 func main() {
@@ -60,26 +53,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	file, err := os.Open(absoluteFilePath)
-	check(err)
-
-	defer file.Close()
-
-	var count int64
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		if *ignoreEmptyLines {
-			line := scanner.Text()
-			if len(line) == 0 {
-				continue
-			}
-		}
-		count++
-	}
-
-	if err := scanner.Err(); err != nil {
-		panic(err)
-	}
+	count := CountLines(absoluteFilePath, *ignoreEmptyLines)
 
 	fmt.Println("==========================")
 	fmt.Println("Count: ", count)
