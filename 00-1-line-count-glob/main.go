@@ -4,6 +4,7 @@ import (
 	"../00-line-count/filelinecounter"
 	"fmt"
 	"path/filepath"
+	"sync"
 )
 
 func main() {
@@ -13,11 +14,19 @@ func main() {
 
 	absolutePath, _ := filepath.Abs("../../../**/*.*")
 	matches, _ := filepath.Glob(absolutePath)
+	ch := make(chan int64, len(matches))
 
+	// oh well ¯\_(ツ)_/¯ https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
 	for _, match := range matches {
-		countOfLines, err := filelinecounter.CountLines(match, false)
-		if err == nil {
-			fmt.Println(match, countOfLines)
-		}
+		go func () {
+			countOfLines, err := filelinecounter.CountLines(match, false)
+			if err == nil {
+				ch <- countOfLines
+			}
+		}()
+	}
+
+	for countOfLines := range ch {
+		fmt.Println(countOfLines)
 	}
 }
