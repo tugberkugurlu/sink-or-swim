@@ -15,18 +15,26 @@ func main() {
 	absolutePath, _ := filepath.Abs("../../../**/*.*")
 	matches, _ := filepath.Glob(absolutePath)
 	ch := make(chan int64, len(matches))
+	var wg sync.WaitGroup
 
-	// oh well ¯\_(ツ)_/¯ https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
+	// see https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
 	for _, match := range matches {
-		go func () {
-			countOfLines, err := filelinecounter.CountLines(match, false)
+		wg.Add(1)
+		go func (filePath string) {
+			defer wg.Done()
+			countOfLines, err := filelinecounter.CountLines(filePath, false)
 			if err == nil {
 				ch <- countOfLines
 			}
-		}()
+		}(match)
 	}
 
-	for countOfLines := range ch {
-		fmt.Println(countOfLines)
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
+
+	for m := range ch {
+		fmt.Println(m)
 	}
 }
