@@ -9,6 +9,12 @@
 
  - [Using goroutines on loop iterator variables](https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables) easy mistake to make but very common in every lang. It was a surprise that Goland didn't give a warning for this.
  - [Go by Example: Range over Channels](https://gobyexample.com/range-over-channels) you can range over a channel and makes it more reliable to get things this way as it handles the closed channels appropriately as far as I experienced. For instance, with a `for` loop and reading from the channel manually by using `<-ch` syntax, I started getting it zeros at the end. This is probably further explain here on why: [Why are there nil channels in Go?](https://medium.com/justforfunc/why-are-there-nil-channels-in-go-9877cc0b2308).
+ 
+[GopherCon 2017: Kavya Joshi - Understanding Channels](https://www.youtube.com/watch?v=KBZlN0izeiY)
+
+ - Mainly talks about the inner workings of channels and channel operations
+ - Channels are **goroutine-safe**!
+ - Channels store and pass values across goroutines with FIFO semantics.
 
 ## Side Learnings
 
