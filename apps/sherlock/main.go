@@ -17,6 +17,8 @@ func main() {
 	consumerSecret := viper.GetString("TWITTER__CONSUMER__SECRET")
 
 	twitterClient := anaconda.NewTwitterApiWithCredentials(accessToken, accessTokenSecret, consumerKey, consumerSecret)
+	defer twitterClient.Close()
+
 	followerIds := twitterClient.GetFollowersIdsAll(url.Values{})
 
 	for page := range followerIds {
@@ -24,8 +26,16 @@ func main() {
 			panic(page.Error)
 		}
 
-		for _, id := range page.Ids {
-			fmt.Println(id)
+		// you hit a limit here if you send all the ids, need to loop through here
+		// see https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup.html
+		// "up to 100 are allowed in a single request."
+		users, err := twitterClient.GetUsersLookupByIds(page.Ids[:30], url.Values{})
+		if err != nil {
+			panic(err)
+		}
+
+		for _, user := range users {
+			fmt.Println(user.Name)
 		}
 	}
 }
