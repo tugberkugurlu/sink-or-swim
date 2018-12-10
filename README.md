@@ -4,7 +4,7 @@ Me learning Go programming language by implementing concepts from real world pro
 
 ## Scenarios
 
-### 00: line-count
+### [00: line-count](./00-line-count)
 
 Implement a command-line application which takes a path to a file and calculates the number of lines in that file. Also accept optional command-line paratemer to skip counting the empty lines.
 
