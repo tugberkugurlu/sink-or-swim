@@ -37,5 +37,16 @@ func main() {
 		for _, user := range users {
 			fmt.Println(user.Name)
 		}
+
+		// 1: put followers into a map in first iteration
+		// 2: sleep for a minute
+		// 3: put followers into another map on second iteration
+		// 4: diff and return a slice of values that are only present in one of the input slices
+		// 5: check that slice one by one and see where the value exists.
+		// 		If it exists inside the source map, it means unfollow
+		//      If it exists inside the new map, it means follow
+		// 6: record follow/unfollow events
+		// 7: make the new map the source map
+		// 8: goto 2
 	}
 }
