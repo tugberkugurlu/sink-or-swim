@@ -53,6 +53,10 @@ func main() {
 		diffs := compare(baseFollowers, followers)
 		fmt.Println("Number of diffs: ", len(diffs))
 		for userId := range diffs {
+			// check the diff one to see where the value exists.
+			// 		If it exists inside the source map, it means unfollow
+			//      If it exists inside the new map, it means follow
+
 			if name, ok := baseFollowers[userId]; ok {
 				// unfollow happened
 				fmt.Println("Unfollow: ", userId, name)
@@ -105,17 +109,6 @@ func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
 		}
 
 		fmt.Println("Number of followers retrieved: ", len(usersMap))
-
-		// 1: put followers into a map in first iteration
-		// 2: sleep for a minute
-		// 3: put followers into another map on second iteration
-		// 4: diff and return a slice of values that are only present in one of the input slices
-		// 5: check that slice one by one and see where the value exists.
-		// 		If it exists inside the source map, it means unfollow
-		//      If it exists inside the new map, it means follow
-		// 6: record follow/unfollow events
-		// 7: make the new map the source map
-		// 8: goto 2
 	}
 
 	return usersMap
