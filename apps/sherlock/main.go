@@ -44,12 +44,20 @@ func main() {
 	twitterClient := anaconda.NewTwitterApiWithCredentials(accessToken, accessTokenSecret, consumerKey, consumerSecret)
 	defer twitterClient.Close()
 
-	baseFollowers := getFollowers(twitterClient)
+	baseFollowers, err := getFollowers(twitterClient)
+	if err != nil {
+		panic(err)
+	}
+
 	for {
 		fmt.Println("will sleep for a minute now...")
 		time.Sleep(1 * time.Minute)
 
-		followers := getFollowers(twitterClient)
+		followers, err := getFollowers(twitterClient)
+		if err != nil {
+			panic(err)
+		}
+
 		diffs := compare(baseFollowers, followers)
 		fmt.Println("Number of diffs: ", len(diffs))
 		for userId := range diffs {
@@ -71,13 +79,12 @@ func main() {
 	}
 }
 
-func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
+func getFollowers(twitterClient *anaconda.TwitterApi) (map[int64]string, error) {
 	usersMap := make(map[int64]string)
 	followerIds := twitterClient.GetFollowersIdsAll(url.Values{})
 	for page := range followerIds {
 		if page.Error != nil {
-			// TODO: Don't panic here, return err instead
-			panic(page.Error)
+			return nil, page.Error
 		}
 
 		// you hit a limit here if you send all the ids, need to loop through here
@@ -99,8 +106,7 @@ func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
 
 			users, err := twitterClient.GetUsersLookupByIds(page.Ids[start:end], url.Values{})
 			if err != nil {
-				// TODO: Don't panic here, return err instead
-				panic(err)
+				return nil, err
 			}
 
 			for _, user := range users {
@@ -111,5 +117,5 @@ func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
 		fmt.Println("Number of followers retrieved: ", len(usersMap))
 	}
 
-	return usersMap
+	return usersMap, nil
 }
