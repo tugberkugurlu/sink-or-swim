@@ -7,7 +7,6 @@ To get started,
  - Sign up for a [Twitter developer account](https://developer.twitter.com/en/apply-for-access.html)
  - Create a Twitter app under that dev account
  - Set up below environment variables correspondingly
-
     ```bash
     export SHERLOCK_TWITTER__ACCESS__TOKEN=""
     export SHERLOCK_TWITTER__ACCESS__TOKEN__SECRET=""
