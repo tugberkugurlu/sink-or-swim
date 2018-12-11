@@ -101,7 +101,6 @@ func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
 
 			for _, user := range users {
 				usersMap[user.Id] = user.Name
-				// fmt.Println(user.Name)
 			}
 		}
 
