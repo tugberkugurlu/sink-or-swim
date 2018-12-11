@@ -33,22 +33,26 @@ func main() {
 		chunks := followerCount / 100
 		lastChunk := followerCount % 100
 
+		usersMap := make(map[int64]string)
 		for i := 0; i <= chunks; i++ {
 			start := i * 100
 			end := start + 100
 			if i == chunks {
 				end = start + lastChunk
 			}
-			
+
 			users, err := twitterClient.GetUsersLookupByIds(page.Ids[start:end], url.Values{})
 			if err != nil {
 				panic(err)
 			}
 
 			for _, user := range users {
+				usersMap[user.Id] = user.Name
 				fmt.Println(user.Name)
 			}
 		}
+
+		fmt.Println("Number of followers retrieved: ", len(usersMap))
 
 		// 1: put followers into a map in first iteration
 		// 2: sleep for a minute
