@@ -5,6 +5,7 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/spf13/viper"
 	"net/url"
+	"sync"
 	"time"
 )
 
@@ -79,7 +80,16 @@ func main() {
 	}
 }
 
+type userWithId struct {
+	Id int64
+	Name string
+}
+
+// you hit a limit here if you send all the ids, need to loop through here
+// see https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup.html
+// "up to 100 are allowed in a single request."
 func getFollowers(twitterClient *anaconda.TwitterApi) (map[int64]string, error) {
+	start := time.Now()
 	usersMap := make(map[int64]string)
 	followerIds := twitterClient.GetFollowersIdsAll(url.Values{})
 	for page := range followerIds {
@@ -87,12 +97,12 @@ func getFollowers(twitterClient *anaconda.TwitterApi) (map[int64]string, error) 
 			return nil, page.Error
 		}
 
-		// you hit a limit here if you send all the ids, need to loop through here
-		// see https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup.html
-		// "up to 100 are allowed in a single request."
 		followerCount := len(page.Ids)
 		chunks := followerCount / 100
 		lastChunk := followerCount % 100
+
+		var wg sync.WaitGroup
+		usersChan := make(chan userWithId, followerCount)
 
 		for i := 0; i <= chunks; i++ {
 			start := i * 100
@@ -104,17 +114,33 @@ func getFollowers(twitterClient *anaconda.TwitterApi) (map[int64]string, error) 
 				end = start + lastChunk
 			}
 
-			users, err := twitterClient.GetUsersLookupByIds(page.Ids[start:end], url.Values{})
-			if err != nil {
-				return nil, err
-			}
+			wg.Add(1)
+			go func (userIds []int64) {
+				defer wg.Done()
+				users, err := twitterClient.GetUsersLookupByIds(userIds, url.Values{})
+				if err != nil {
+					// TODO: Do not panic here, propagate the error back to the main goroutine
+					panic(err)
+				}
 
-			for _, user := range users {
-				usersMap[user.Id] = user.Name
-			}
+				for _, user := range users {
+					usersChan <- userWithId{Id: user.Id, Name: user.Name}
+				}
+			}(page.Ids[start:end])
 		}
 
+		go func() {
+			wg.Wait()
+			close(usersChan)
+		}()
+
+		for user := range usersChan {
+			usersMap[user.Id] = user.Name
+		}
+
+		elapsed := time.Since(start)
 		fmt.Println("Number of followers retrieved: ", len(usersMap))
+		fmt.Printf("getFollowers took %s\n", elapsed)
 	}
 
 	return usersMap, nil
