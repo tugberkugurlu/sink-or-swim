@@ -13,18 +13,25 @@ type Difference struct {
 	IsUnfollower bool
 }
 
-// see https://mrekucci.blogspot.com/2015/07/dont-abuse-mathmax-mathmin.html
-func min(x, y int) int {
-	if x < y {
-		return x
+// This function runs in O(N + M) time complexity, where the length of N and M
+// corresponds to the length of before and after maps respectively.
+func compare(before, after map[int64]bool) (differences map[int64]bool) {
+	// O(N)
+	for key, _ := range before {
+		// O(1)
+		if _, ok := after[key]; !ok {
+			differences[key] = true
+		}
 	}
-	return y
-}
 
-func compare(before, after []int64) (differences []int64) {
-	minCount := min(len(before), len(after))
-	for i := 0; i < minCount; i++ {
+	// O(M)
+	for key, _ := range after {
+		// O(1)
+		if _, ok := before[key]; !ok {
+			differences[key] = true
+		}
 	}
+
 	return
 }
 

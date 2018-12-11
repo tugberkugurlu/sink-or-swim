@@ -20,3 +20,4 @@ To get started,
  - https://stackoverflow.com/questions/19374219/how-to-find-the-difference-between-two-slices-of-strings-in-golang
  - https://github.com/adam-hanna/arrayOperations#difference
  - https://stackoverflow.com/questions/18208394/testing-equivalence-of-maps-golang
+ - https://mrekucci.blogspot.com/2015/07/dont-abuse-mathmax-mathmin.html
