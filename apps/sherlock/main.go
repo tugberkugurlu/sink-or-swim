@@ -29,13 +29,25 @@ func main() {
 		// you hit a limit here if you send all the ids, need to loop through here
 		// see https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup.html
 		// "up to 100 are allowed in a single request."
-		users, err := twitterClient.GetUsersLookupByIds(page.Ids[:30], url.Values{})
-		if err != nil {
-			panic(err)
-		}
+		followerCount := len(page.Ids)
+		chunks := followerCount / 100
+		lastChunk := followerCount % 100
 
-		for _, user := range users {
-			fmt.Println(user.Name)
+		for i := 0; i <= chunks; i++ {
+			start := i * 100
+			end := start + 100
+			if i == chunks {
+				end = start + lastChunk
+			}
+			
+			users, err := twitterClient.GetUsersLookupByIds(page.Ids[start:end], url.Values{})
+			if err != nil {
+				panic(err)
+			}
+
+			for _, user := range users {
+				fmt.Println(user.Name)
+			}
 		}
 
 		// 1: put followers into a map in first iteration
