@@ -7,6 +7,31 @@ import (
 	"net/url"
 )
 
+type Difference struct {
+	Id int64
+	IsFollower bool
+	IsUnfollower bool
+}
+
+// see https://mrekucci.blogspot.com/2015/07/dont-abuse-mathmax-mathmin.html
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func compare(before, after []int64) (differences []int64) {
+	minCount := min(len(before), len(after))
+	for i := 0; i < minCount; i++ {
+	}
+	return
+}
+
+func getDifferences(before, after map[int64]string) (differences []Difference) {
+	return
+}
+
 func main() {
 	viper.SetEnvPrefix("SHERLOCK")
 	viper.AutomaticEnv()
