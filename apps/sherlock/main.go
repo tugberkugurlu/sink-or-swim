@@ -52,7 +52,7 @@ func main() {
 		followers := getFollowers(twitterClient)
 		diffs := compare(baseFollowers, followers)
 		fmt.Println("Number of diffs: ", len(diffs))
-		for userId, _ := range diffs {
+		for userId := range diffs {
 			if name, ok := baseFollowers[userId]; ok {
 				// unfollow happened
 				fmt.Println("Unfollow: ", userId, name)
