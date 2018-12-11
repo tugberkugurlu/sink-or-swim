@@ -87,6 +87,9 @@ func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
 			start := i * 100
 			end := start + 100
 			if i == chunks {
+				if lastChunk == 0 {
+					break
+				}
 				end = start + lastChunk
 			}
 
