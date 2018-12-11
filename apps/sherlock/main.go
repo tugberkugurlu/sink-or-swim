@@ -8,19 +8,13 @@ import (
 	"time"
 )
 
-type Difference struct {
-	Id int64
-	IsFollower bool
-	IsUnfollower bool
-}
-
 // This function runs in O(N + M) time complexity, where the length of N and M
 // corresponds to the length of before and after maps respectively.
 func compare(before, after map[int64]string) map[int64]bool {
 	differences := make(map[int64]bool)
 
 	// O(N)
-	for key, _ := range before {
+	for key := range before {
 		// O(1)
 		if _, ok := after[key]; !ok {
 			differences[key] = true
@@ -28,7 +22,7 @@ func compare(before, after map[int64]string) map[int64]bool {
 	}
 
 	// O(M)
-	for key, _ := range after {
+	for key := range after {
 		// O(1)
 		if _, ok := before[key]; !ok {
 			differences[key] = true
@@ -36,10 +30,6 @@ func compare(before, after map[int64]string) map[int64]bool {
 	}
 
 	return differences
-}
-
-func getDifferences(before, after map[int64]string) (differences []Difference) {
-	return
 }
 
 func main() {
