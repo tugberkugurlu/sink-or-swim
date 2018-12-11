@@ -5,6 +5,7 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/spf13/viper"
 	"net/url"
+	"time"
 )
 
 type Difference struct {
@@ -15,7 +16,9 @@ type Difference struct {
 
 // This function runs in O(N + M) time complexity, where the length of N and M
 // corresponds to the length of before and after maps respectively.
-func compare(before, after map[int64]bool) (differences map[int64]bool) {
+func compare(before, after map[int64]string) map[int64]bool {
+	differences := make(map[int64]bool)
+
 	// O(N)
 	for key, _ := range before {
 		// O(1)
@@ -32,7 +35,7 @@ func compare(before, after map[int64]bool) (differences map[int64]bool) {
 		}
 	}
 
-	return
+	return differences
 }
 
 func getDifferences(before, after map[int64]string) (differences []Difference) {
@@ -51,10 +54,35 @@ func main() {
 	twitterClient := anaconda.NewTwitterApiWithCredentials(accessToken, accessTokenSecret, consumerKey, consumerSecret)
 	defer twitterClient.Close()
 
-	followerIds := twitterClient.GetFollowersIdsAll(url.Values{})
+	baseFollowers := getFollowers(twitterClient)
+	for {
+		fmt.Println("will sleep for a minute now...")
+		time.Sleep(1 * time.Minute)
 
+		followers := getFollowers(twitterClient)
+		diffs := compare(baseFollowers, followers)
+		fmt.Println("Number of diffs: ", len(diffs))
+		for userId, _ := range diffs {
+			if name, ok := baseFollowers[userId]; ok {
+				// unfollow happened
+				fmt.Println("Unfollow: ", userId, name)
+			} else {
+				// follow happened
+				followerName := followers[userId]
+				fmt.Println("Follow: ", userId, followerName)
+			}
+		}
+
+		baseFollowers = followers
+	}
+}
+
+func getFollowers(twitterClient *anaconda.TwitterApi) map[int64]string {
+	usersMap := make(map[int64]string)
+	followerIds := twitterClient.GetFollowersIdsAll(url.Values{})
 	for page := range followerIds {
 		if page.Error != nil {
+			// TODO: Don't panic here, return err instead
 			panic(page.Error)
 		}
 
@@ -65,7 +93,6 @@ func main() {
 		chunks := followerCount / 100
 		lastChunk := followerCount % 100
 
-		usersMap := make(map[int64]string)
 		for i := 0; i <= chunks; i++ {
 			start := i * 100
 			end := start + 100
@@ -75,12 +102,13 @@ func main() {
 
 			users, err := twitterClient.GetUsersLookupByIds(page.Ids[start:end], url.Values{})
 			if err != nil {
+				// TODO: Don't panic here, return err instead
 				panic(err)
 			}
 
 			for _, user := range users {
 				usersMap[user.Id] = user.Name
-				fmt.Println(user.Name)
+				// fmt.Println(user.Name)
 			}
 		}
 
@@ -97,4 +125,6 @@ func main() {
 		// 7: make the new map the source map
 		// 8: goto 2
 	}
+
+	return usersMap
 }

@@ -15,6 +15,10 @@ To get started,
     export SHERLOCK_TWITTER__CONSUMER__SECRET=""
     ```
 
+## Detecting Followers
+
+![](./_media/follow-detect.PNG)
+
 ## Resources
 
  - https://stackoverflow.com/questions/19374219/how-to-find-the-difference-between-two-slices-of-strings-in-golang
