@@ -31,3 +31,4 @@ This is inspired by [TodoMVC](https://github.com/tastejs/todomvc). This will hav
 ## Side Learning
 
  - Go type embedding: https://travix.io/type-embedding-in-go-ba40dd4264df
+ - Type switches: https://yourbasic.org/golang/type-assertion-switch/
