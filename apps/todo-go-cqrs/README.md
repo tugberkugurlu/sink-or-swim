@@ -32,3 +32,4 @@ This is inspired by [TodoMVC](https://github.com/tastejs/todomvc). This will hav
 
  - Go type embedding: https://travix.io/type-embedding-in-go-ba40dd4264df
  - Type switches: https://yourbasic.org/golang/type-assertion-switch/
+ - How do I do a literal *int64 in Go?: https://stackoverflow.com/questions/30716354/how-do-i-do-a-literal-int64-in-go
