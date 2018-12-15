@@ -1,0 +1,4 @@
+github.com/jetbasrawi/go.cqrs v0.0.0-20171003130630-b0b8fdae71f3 h1:7+Z4oeZNOlttKU76Kaxg7SDt9M/SiY3ldFcRGNJlCYw=
+github.com/jetbasrawi/go.cqrs v0.0.0-20171003130630-b0b8fdae71f3/go.mod h1:kAwo/aeGRFkDFPkjHm1GMi3Klcc3PXqBRAMQOPUO6L0=
+github.com/jetbasrawi/go.geteventstore v1.0.0 h1:eRICKjH59qET0lQG5pOPllWgLiOLdeLOaOR78Y3iM6c=
+github.com/jetbasrawi/go.geteventstore v1.0.0/go.mod h1:lEkGcCQHpZLkhgu7OEMyNnl65l7K9NoaOeQljpTRaek=
