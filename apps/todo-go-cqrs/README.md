@@ -16,7 +16,7 @@ This is inspired by [TodoMVC](https://github.com/tastejs/todomvc). This will hav
 
  - AddToDoItemCommand (emits `ToDoItemAddedEvent` event)
  - RemoveToDoItemCommand (emits `ToDoItemRemovedEvent` event)
- - ToogleToDoItemCompletionCommand (emits either `ToDoItemCompletedEvent` or `ToDoItemCompletionRevertedEvent` event)
+ - ToggleToDoItemCompletionCommand (emits either `ToDoItemCompletedEvent` or `ToDoItemCompletionRevertedEvent` event)
 
 ## Queries
 
@@ -27,3 +27,7 @@ This is inspired by [TodoMVC](https://github.com/tastejs/todomvc). This will hav
 ## Sagas
 
  - CompletedItemCleanerSaga: Sends `RemoveToDoItemCommand` for each completed item found by `CompletedToDoItemsQuery`. This is implemented as a saga since this bulk operation goes across consistency boundaries. For more information, see ["How can I update a set of aggregates with a single command?"](http://www.cqrs.nu/faq) section in CQRS FAQ provided by Edument.
+
+## Side Learning
+
+ - Go type embedding: https://travix.io/type-embedding-in-go-ba40dd4264df
