@@ -25,6 +25,7 @@ func (h *ToDoItemCommandHandlers) Handle(message ycq.CommandMessage) error {
 
 	switch cmd := message.Command().(type) {
 
+	// TODO: Doesn't check the number of uncompleted todo items
 	case *AddToDoItemCommand:
 		todo = NewToDoItem(message.AggregateID())
 		if err := todo.Create(cmd.Content); err != nil {
@@ -38,6 +39,8 @@ func (h *ToDoItemCommandHandlers) Handle(message ycq.CommandMessage) error {
 		todo.ToggleCompletion()
 
 		return h.repo.Save(todo, ycq.Int(todo.OriginalVersion()))
+
+	// TODO: Doesn't handle RemoveToDoItemCommand
 
 	default:
 		log.Fatalf("ToDoItemCommandHandlers has received a command that it is does not know how to handle, %#v", cmd)
