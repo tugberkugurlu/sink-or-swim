@@ -25,17 +25,16 @@ func (todo *ToDoItem) Create(content string) error {
 		return errors.New("the content cannot be empty")
 	}
 
-	v := todo.CurrentVersion()
-
 	todo.Apply(ycq.NewEventMessage(todo.AggregateID(),
-		&ToDoItemAddedEvent{ToDoItemID: todo.AggregateID(), Content: content, AddedAt: time.Now()}, &v))
+		&ToDoItemAddedEvent{ToDoItemID: todo.AggregateID(),
+			Content: content,
+			AddedAt: time.Now()},
+			ycq.Int(todo.CurrentVersion())), true)
 
 	return nil
 }
 
 func (todo *ToDoItem) ToggleCompletion() {
-	v := todo.CurrentVersion()
-
 	var event interface{}
 	if !todo.completed {
 		event = ToDoItemCompletedEvent{ToDoItemID: todo.AggregateID(), CompletedAt: time.Now()}
@@ -43,11 +42,13 @@ func (todo *ToDoItem) ToggleCompletion() {
 		event = ToDoItemCompletionRevertedEvent{ToDoItemID: todo.AggregateID(), RevertedAt: time.Now()}
 	}
 
-	todo.Apply(ycq.NewEventMessage(todo.AggregateID(), &event, &v))
+	todo.Apply(ycq.NewEventMessage(todo.AggregateID(), &event, ycq.Int(todo.CurrentVersion())), true)
 }
 
-func (todo *ToDoItem) Apply(message ycq.EventMessage) {
-	todo.TrackChange(message)
+func (todo *ToDoItem) Apply(message ycq.EventMessage, isNew bool) {
+	if isNew {
+		todo.TrackChange(message)
+	}
 
 	switch ev := message.Event().(type) {
 
