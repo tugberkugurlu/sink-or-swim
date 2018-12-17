@@ -53,3 +53,7 @@ This is inspired by [TodoMVC](https://github.com/tastejs/todomvc). This will hav
    ```
 
    This is good since we check for the defensive case first and terminate the function.
+
+## Resources
+
+ - [Pass by pointer vs pass by value in Go](http://goinbigdata.com/golang-pass-by-pointer-vs-pass-by-value/)
