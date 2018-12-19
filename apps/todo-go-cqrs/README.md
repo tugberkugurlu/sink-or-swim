@@ -38,21 +38,25 @@ This is inspired by [TodoMVC](https://github.com/tastejs/todomvc). This will hav
  - Go doesn't give you a way to ensure interface compliance for the interface implementor as Go embraces structural typing. However, it may not be a big deal considering the below two cases:
    - You probably use the interface implementation to assign to a variable or pass it as an argument to a method or function. This provides automatic compile-time checking
    - If you don't do the above (in cases where you rely on DI for example), you may have test on this to ensure it conforms the interface signature
-   
+
    In other words, [in Go, you don’t declare that a type implements an interface. Instead, a type just implements the methods in the interface. This lack of ceremony makes interfaces feel very simple and informal](https://blog.carbonfive.com/2012/09/23/structural-typing-compile-time-duck-typing/).
- - In Go, idiomatic way to code defensively is to handle the defensive case 
+ - In Go, idiomatic way to code defensively is to handle the defensive case
    first so that all the happy path is written w/o indentation. For example,
- 
+
    ```
 	events, ok := repo.current[id]
 	if !ok {
 		return nil, &ycq.ErrAggregateNotFound{}
 	}
-	
+
 	// do the rest here ...
    ```
 
    This is good since we check for the defensive case first and terminate the function.
+ - Lack of constructors in #golang sucks a bit. The convention of `New...` works OK
+   but so clunky as it doesn't prevent direct construction. So, AFA I can see, there
+   is no built-in way to say that "This struct needs these values to be constructed.
+   If you don't have them, you cannot!"
 
 ## Resources
 
